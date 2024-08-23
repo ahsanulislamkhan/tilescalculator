@@ -16,8 +16,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between; /* Space out header, content, and footer */
-            min-height: 100vh; /* Make sure the content stretches to the full height */
+            justify-content: space-between;
+            min-height: 100vh;
         }
 
         header {
@@ -48,7 +48,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 0.8s ease-out;
-            display: none; /* Hide by default */
+            display: none;
             flex-direction: column;
             align-items: center;
         }
@@ -85,7 +85,7 @@
             padding: 12px;
             border: 1px solid #ccc;
             border-radius: 6px;
-            font-size: 16px; /* Prevent zoom on input focus */
+            font-size: 16px;
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
             animation: fadeInUp 1.2s ease-out;
             box-sizing: border-box;
@@ -108,10 +108,9 @@
             padding-right: 36px;
         }
 
-        button {
-            width: 100%;
+        button, .add-area-button {
             padding: 12px;
-            background-color: #444;
+            background-color: #57C9E7;
             border: none;
             color: white;
             font-size: 16px;
@@ -123,8 +122,8 @@
             box-sizing: border-box;
         }
 
-        button:hover {
-            background-color: #333;
+        button:hover, .add-area-button:hover {
+            background-color: #46b1d1;
             transform: translateY(-2px);
         }
 
@@ -140,6 +139,19 @@
 
         .removeAreaButton:hover {
             background-color: #c82333;
+        }
+
+        .add-area-button {
+            font-size: 24px;
+            font-weight: bold;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto 0;
+            border-radius: 50%;
+            background-color: #57C9E7;
         }
 
         footer {
@@ -212,16 +224,15 @@
             cursor: pointer;
         }
 
-        /* Redesigned Choice Modal */
         #choiceModal {
             display: flex;
             align-items: center;
             justify-content: center;
             background-color: rgba(255, 255, 255, 0.9);
-            position: relative; /* Relative to keep it within the flow */
+            position: relative;
             width: 100%;
-            height: auto; /* Auto height to not cover entire screen */
-            margin-top: 20px; /* Add margin to give space below header */
+            height: auto;
+            margin-top: 20px;
         }
 
         #choiceModal .modal-content {
@@ -241,7 +252,7 @@
         }
 
         #choiceModal button {
-            background-color: #444;
+            background-color: #57C9E7;
             color: white;
             padding: 15px;
             border-radius: 8px;
@@ -258,7 +269,7 @@
         }
 
         #choiceModal button:hover {
-            background-color: #333;
+            background-color: #46b1d1;
         }
 
         .back-button {
@@ -388,7 +399,7 @@
                 </div>
             </div>
             <div>
-                <button type="button" onclick="addArea()">Add Another Area</button>
+                <button type="button" class="add-area-button" onclick="addArea()">+</button>
             </div>
             <div>
                 <button type="button" onclick="calculateTiles()">Calculate</button>
