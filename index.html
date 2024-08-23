@@ -46,7 +46,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             animation: fadeInUp 0.8s ease-out;
-            display: flex;
+            display: none; /* Hide by default */
             flex-direction: column;
             align-items: center;
         }
@@ -94,7 +94,6 @@
             box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
         }
 
-        /* Redesigned Dropdown */
         select {
             appearance: none;
             -webkit-appearance: none;
@@ -104,7 +103,7 @@
             background-repeat: no-repeat;
             background-position: right 12px center;
             background-size: 16px 16px;
-            padding-right: 36px; /* space for arrow */
+            padding-right: 36px;
         }
 
         button {
@@ -170,7 +169,6 @@
             margin-bottom: 10px;
         }
 
-        /* Modal container */
         .modal {
             display: none;
             position: fixed;
@@ -184,7 +182,6 @@
             animation: fadeIn 0.5s ease-out;
         }
 
-        /* Modal content */
         .modal-content {
             background-color: #fff;
             margin: 15% auto;
@@ -195,9 +192,9 @@
             border-radius: 8px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             animation: fadeInUp 0.8s ease-out;
+            text-align: center;
         }
 
-        /* Close button */
         .close {
             color: #aaa;
             float: right;
@@ -212,6 +209,57 @@
             color: #000;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        /* Redesigned Choice Modal */
+        #choiceModal {
+            display: block;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        #choiceModal .modal-content {
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        #choiceModal h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        #choiceModal button {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+            transition: background-color 0.3s ease;
+        }
+
+        #choiceModal button:first-child {
+            margin-top: 0;
+        }
+
+        #choiceModal button:hover {
+            background-color: #0056b3;
+        }
+
+        .back-button {
+            margin-top: 20px;
+            background-color: #6c757d;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
         }
 
         @keyframes fadeIn {
@@ -262,6 +310,20 @@
             .area-section {
                 padding: 10px;
             }
+
+            #choiceModal .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+
+            #choiceModal h2 {
+                font-size: 20px;
+            }
+
+            #choiceModal button {
+                font-size: 14px;
+                padding: 12px;
+            }
         }
     </style>
 </head>
@@ -271,7 +333,16 @@
         <h1>Tile Calculator</h1>
     </header>
 
-    <section>
+    <!-- Choice Modal -->
+    <div id="choiceModal" class="modal">
+        <div class="modal-content">
+            <h2>Select Calculator</h2>
+            <button onclick="showCalculator('tiles')">Calculate Tiles and Boxes Needed</button>
+            <button onclick="showCalculator('coverage')">Calculate Total Coverage Area</button>
+        </div>
+    </div>
+
+    <section id="tilesCalculatorSection">
         <h2>Calculate Tiles and Boxes Needed</h2>
         <form id="tileCalculator">
             <div>
@@ -314,10 +385,11 @@
             <div>
                 <button type="button" onclick="calculateTiles()">Calculate</button>
             </div>
+            <button type="button" class="back-button" onclick="goBackToSelection()">Go Back to Selection</button>
         </form>
     </section>
 
-    <section>
+    <section id="coverageCalculatorSection">
         <h2>Calculate Total Coverage Area</h2>
         <form id="coverageCalculator">
             <div>
@@ -339,6 +411,7 @@
             <div>
                 <button type="button" onclick="calculateTotalCoverage()">Calculate Coverage</button>
             </div>
+            <button type="button" class="back-button" onclick="goBackToSelection()">Go Back to Selection</button>
         </form>
     </section>
 
@@ -469,6 +542,21 @@ function calculateTotalCoverage() {
 
     const modal = document.getElementById('resultModal');
     modal.style.display = 'block';
+}
+
+function showCalculator(type) {
+    document.getElementById('choiceModal').style.display = 'none';
+    if (type === 'tiles') {
+        document.getElementById('tilesCalculatorSection').style.display = 'block';
+    } else if (type === 'coverage') {
+        document.getElementById('coverageCalculatorSection').style.display = 'block';
+    }
+}
+
+function goBackToSelection() {
+    document.getElementById('tilesCalculatorSection').style.display = 'none';
+    document.getElementById('coverageCalculatorSection').style.display = 'none';
+    document.getElementById('choiceModal').style.display = 'flex';
 }
 
 document.querySelector('.close').onclick = function() {
