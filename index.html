@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f5f5f6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        header img {
+            width: 120px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        h1 {
+            color: #383838;
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 24px;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        section {
+            background-color: white;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h2 {
+            color: #007BFF;
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 20px;
+            animation: fadeInUp 1.2s ease-out;
+            text-align: center;
+        }
+
+        form {
+            width: 100%;
+        }
+
+        form div {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        label {
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #555;
+            animation: fadeInUp 1s ease-out;
+            display: block;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1.2s ease-out;
+            box-sizing: border-box;
+        }
+
+        input:focus, select:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+        }
+
+        /* Redesigned Dropdown */
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: #fff;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="%23333" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14l-4.796-5.481c-.566-.647-.106-1.659.754-1.659h9.59c.86 0 1.32 1.012.754 1.659l-4.796 5.48a1 1 0 0 1-1.508 0z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px 16px;
+            padding-right: 36px; /* space for arrow */
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            animation: fadeInUp 1.5s ease-out;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .removeAreaButton {
+            background-color: #dc3545;
+            margin-top: 10px;
+            font-size: 14px;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .removeAreaButton:hover {
+            background-color: #c82333;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #aaa;
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .area-section {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            animation: fadeInUp 1.2s ease-out;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .area-section h3 {
+            margin-top: 0;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        /* Modal container */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Modal content */
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        /* Close button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            header img {
+                width: 100px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            input, select {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            footer {
+                font-size: 12px;
+            }
+
+            section {
+                padding: 15px;
+            }
+
+            .area-section {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="https://www.amazingtiles.com.au/cdn/shop/files/final-logo-amazing.png?v=1651806364" alt="Amazing Tiles Logo">
+        <h1>Tile Calculator</h1>
+    </header>
+
+    <section>
+        <h2>Calculate Tiles and Boxes Needed</h2>
+        <form id="tileCalculator">
+            <div>
+                <label for="tileLength">Tile Length (mm):</label>
+                <input type="number" id="tileLength" required>
+            </div>
+            <div>
+                <label for="tileWidth">Tile Width (mm):</label>
+                <input type="number" id="tileWidth" required>
+            </div>
+            <div>
+                <label for="tilesPerBox">Tiles per Box:</label>
+                <input type="number" id="tilesPerBox" required>
+            </div>
+            <div id="areas">
+                <div class="area-section" id="area1">
+                    <h3>Area 1</h3>
+                    <div>
+                        <label>Space Dimensions:</label>
+                        <select class="dimensionType" onchange="toggleDimensions(this)">
+                            <option value="totalArea">Total Square Meters</option>
+                            <option value="lengthWidth">Length and Width</option>
+                        </select>
+                    </div>
+                    <div class="totalAreaInput">
+                        <label>Total Area (square meters):</label>
+                        <input type="number" class="totalArea">
+                    </div>
+                    <div class="lengthWidthInput" style="display:none">
+                        <label>Space Length (meters):</label>
+                        <input type="number" class="spaceLength">
+                        <label>Space Width (meters):</label>
+                        <input type="number" class="spaceWidth">
+                    </div>
+                </div>
+            </div>
+            <div>
+                <button type="button" onclick="addArea()">Add Another Area</button>
+            </div>
+            <div>
+                <button type="button" onclick="calculateTiles()">Calculate</button>
+            </div>
+        </form>
+    </section>
+
+    <section>
+        <h2>Calculate Total Coverage Area</h2>
+        <form id="coverageCalculator">
+            <div>
+                <label for="tileLengthCoverage">Tile Length (mm):</label>
+                <input type="number" id="tileLengthCoverage" required>
+            </div>
+            <div>
+                <label for="tileWidthCoverage">Tile Width (mm):</label>
+                <input type="number" id="tileWidthCoverage" required>
+            </div>
+            <div>
+                <label for="tilesPerBoxCoverage">Tiles per Box:</label>
+                <input type="number" id="tilesPerBoxCoverage" required>
+            </div>
+            <div>
+                <label for="totalBoxes">Total Boxes:</label>
+                <input type="number" id="totalBoxes" required>
+            </div>
+            <div>
+                <button type="button" onclick="calculateTotalCoverage()">Calculate Coverage</button>
+            </div>
+        </form>
+    </section>
+
+    <footer>
+        Developed by Ahsanul Islam Dipu
+    </footer>
+
+    <!-- Modal for displaying results -->
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalResultContent"></div>
+        </div>
+    </div>
+
+<script>
+function addArea() {
+    const areasDiv = document.getElementById('areas');
+    const areaCount = areasDiv.children.length + 1;
+    const areaId = `area${areaCount}`;
+    const newAreaDiv = document.createElement('div');
+    newAreaDiv.className = 'area-section';
+    newAreaDiv.id = areaId;
+    newAreaDiv.innerHTML = `
+        <h3>Area ${areaCount}</h3>
+        <div>
+            <label>Space Dimensions:</label>
+            <select class="dimensionType" onchange="toggleDimensions(this)">
+                <option value="totalArea">Total Square Meters</option>
+                <option value="lengthWidth">Length and Width</option>
+            </select>
+        </div>
+        <div class="totalAreaInput">
+            <label>Total Area (square meters):</label>
+            <input type="number" class="totalArea">
+        </div>
+        <div class="lengthWidthInput" style="display:none">
+            <label>Space Length (meters):</label>
+            <input type="number" class="spaceLength">
+            <label>Space Width (meters):</label>
+            <input type="number" class="spaceWidth">
+        </div>
+        <button type="button" class="removeAreaButton" onclick="removeArea(this)">Remove Area</button>
+    `;
+    areasDiv.appendChild(newAreaDiv);
+}
+
+function toggleDimensions(selectElement) {
+    const dimensionType = selectElement.value;
+    const parentDiv = selectElement.closest('.area-section');
+    if (dimensionType === 'totalArea') {
+        parentDiv.querySelector('.totalAreaInput').style.display = 'block';
+        parentDiv.querySelector('.lengthWidthInput').style.display = 'none';
+    } else {
+        parentDiv.querySelector('.totalAreaInput').style.display = 'none';
+        parentDiv.querySelector('.lengthWidthInput').style.display = 'block';
+    }
+}
+
+function removeArea(button) {
+    const areaDiv = button.closest('.area-section');
+    if (areaDiv) {
+        areaDiv.remove();
+        updateAreaTitles();
+    }
+}
+
+function updateAreaTitles() {
+    const areaSections = document.querySelectorAll('.area-section');
+    areaSections.forEach((area, index) => {
+        area.querySelector('h3').textContent = `Area ${index + 1}`;
+    });
+}
+
+function calculateTiles() {
+    const tileLength = parseFloat(document.getElementById('tileLength').value);
+    const tileWidth = parseFloat(document.getElementById('tileWidth').value);
+    const tilesPerBox = parseInt(document.getElementById('tilesPerBox').value);
+    
+    let totalAreaMeters = 0;
+
+    document.querySelectorAll('.area-section').forEach(area => {
+        let areaMeters = 0;
+        const dimensionType = area.querySelector('.dimensionType').value;
+        if (dimensionType === 'totalArea') {
+            areaMeters = parseFloat(area.querySelector('.totalArea').value);
+        } else {
+            const spaceLength = parseFloat(area.querySelector('.spaceLength').value);
+            const spaceWidth = parseFloat(area.querySelector('.spaceWidth').value);
+            areaMeters = spaceLength * spaceWidth;
+        }
+        totalAreaMeters += areaMeters;
+    });
+
+    const tileAreaMM = tileLength * tileWidth;
+    const tileAreaMeters = tileAreaMM / 1000000;
+    let tilesNeeded = totalAreaMeters / tileAreaMeters;
+    tilesNeeded = Math.ceil(tilesNeeded);
+    const boxesNeeded = Math.ceil(tilesNeeded / tilesPerBox);
+    const exactCoverageMeters = tilesPerBox * boxesNeeded * tileAreaMeters;
+
+    const resultContent = `
+        Total tiles needed: ${tilesNeeded}<br>
+        Total boxes needed: ${boxesNeeded}<br>
+        Exact area covered by required boxes: ${exactCoverageMeters.toFixed(2)} square meters
+    `;
+
+    document.getElementById('modalResultContent').innerHTML = resultContent;
+
+    const modal = document.getElementById('resultModal');
+    modal.style.display = 'block';
+}
+
+function calculateTotalCoverage() {
+    const tileLength = parseFloat(document.getElementById('tileLengthCoverage').value);
+    const tileWidth = parseFloat(document.getElementById('tileWidthCoverage').value);
+    const tilesPerBox = parseInt(document.getElementById('tilesPerBoxCoverage').value);
+    const totalBoxes = parseInt(document.getElementById('totalBoxes').value);
+
+    const tileAreaMM = tileLength * tileWidth;
+    const tileAreaMeters = tileAreaMM / 1000000;
+    const totalTiles = tilesPerBox * totalBoxes;
+    const totalCoverageMeters = totalTiles * tileAreaMeters;
+
+    const resultContent = `Total area covered by ${totalBoxes} boxes: ${totalCoverageMeters.toFixed(2)} square meters`;
+
+    document.getElementById('modalResultContent').innerHTML = resultContent;
+
+    const modal = document.getElementById('resultModal');
+    modal.style.display = 'block';
+}
+
+document.querySelector('.close').onclick = function() {
+    const modal = document.getElementById('resultModal');
+    modal.style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('resultModal');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+}
+</script>
+</body>
+</html>
