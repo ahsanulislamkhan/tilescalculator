@@ -8,15 +8,14 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f5f5f6;
+            background-color: #f0f0f0;
             margin: 0;
             padding: 20px;
             color: #333;
-            overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             min-height: 100vh;
         }
 
@@ -32,11 +31,56 @@
         }
 
         h1 {
-            color: #383838;
+            color: #333;
             margin-top: 10px;
             font-weight: 600;
-            font-size: 24px;
+            font-size: 28px;
             animation: fadeInUp 1.2s ease-out;
+        }
+
+        #choiceModal {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-width: 400px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        #choiceModal h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        #choiceModal button {
+            background-color: #57C9E7;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #choiceModal button:first-child {
+            margin-top: 0;
+        }
+
+        #choiceModal button:hover {
+            background-color: #46b1d1;
+            transform: translateY(-2px);
         }
 
         section {
@@ -154,6 +198,25 @@
             background-color: #57C9E7;
         }
 
+        .back-button {
+            margin-top: 20px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
         footer {
             text-align: center;
             margin-top: 20px;
@@ -224,63 +287,6 @@
             cursor: pointer;
         }
 
-        #choiceModal {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.9);
-            position: relative;
-            width: 100%;
-            height: auto;
-            margin-top: 20px;
-        }
-
-        #choiceModal .modal-content {
-            max-width: 450px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 12px;
-            background-color: #f5f5f6;
-        }
-
-        #choiceModal h2 {
-            font-size: 22px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 25px;
-        }
-
-        #choiceModal button {
-            background-color: #57C9E7;
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 15px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            max-width: 300px;
-            transition: background-color 0.3s ease;
-        }
-
-        #choiceModal button:first-child {
-            margin-top: 0;
-        }
-
-        #choiceModal button:hover {
-            background-color: #46b1d1;
-        }
-
-        .back-button {
-            margin-top: 20px;
-            background-color: #6c757d;
-        }
-
-        .back-button:hover {
-            background-color: #5a6268;
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -301,38 +307,12 @@
             }
 
             h1 {
-                font-size: 20px;
+                font-size: 22px;
             }
 
-            h2 {
-                font-size: 18px;
-            }
-
-            input, select {
-                font-size: 16px;
-                padding: 10px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            footer {
-                font-size: 12px;
-            }
-
-            section {
-                padding: 15px;
-            }
-
-            .area-section {
-                padding: 10px;
-            }
-
-            #choiceModal .modal-content {
-                width: 90%;
+            #choiceModal {
                 padding: 20px;
+                max-width: 90%;
             }
 
             #choiceModal h2 {
@@ -354,11 +334,9 @@
 
     <!-- Choice Modal -->
     <div id="choiceModal">
-        <div class="modal-content">
-            <h2>Select Calculator</h2>
-            <button onclick="showCalculator('tiles')">Calculate Tiles and Boxes Needed</button>
-            <button onclick="showCalculator('coverage')">Calculate Total Coverage Area</button>
-        </div>
+        <h2>Select Calculator</h2>
+        <button onclick="showCalculator('tiles')">Calculate Tiles and Boxes Needed</button>
+        <button onclick="showCalculator('coverage')">Calculate Total Coverage Area</button>
     </div>
 
     <section id="tilesCalculatorSection">
@@ -443,152 +421,201 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <div id="modalResultContent"></div>
+            <button id="downloadPdfButton" style="margin-top: 20px; padding: 10px; background-color: #57C9E7; color: white; border: none; border-radius: 6px; cursor: pointer;">Download PDF</button>
         </div>
     </div>
 
-<script>
-function addArea() {
-    const areasDiv = document.getElementById('areas');
-    const areaCount = areasDiv.children.length + 1;
-    const areaId = `area${areaCount}`;
-    const newAreaDiv = document.createElement('div');
-    newAreaDiv.className = 'area-section';
-    newAreaDiv.id = areaId;
-    newAreaDiv.innerHTML = `
-        <h3>Area ${areaCount}</h3>
-        <div>
-            <label>Space Dimensions:</label>
-            <select class="dimensionType" onchange="toggleDimensions(this)">
-                <option value="totalArea">Total Square Meters</option>
-                <option value="lengthWidth">Length and Width</option>
-            </select>
-        </div>
-        <div class="totalAreaInput">
-            <label>Total Area (square meters):</label>
-            <input type="number" class="totalArea">
-        </div>
-        <div class="lengthWidthInput" style="display:none">
-            <label>Space Length (meters):</label>
-            <input type="number" class="spaceLength">
-            <label>Space Width (meters):</label>
-            <input type="number" class="spaceWidth">
-        </div>
-        <button type="button" class="removeAreaButton" onclick="removeArea(this)">Remove Area</button>
-    `;
-    areasDiv.appendChild(newAreaDiv);
-}
-
-function toggleDimensions(selectElement) {
-    const dimensionType = selectElement.value;
-    const parentDiv = selectElement.closest('.area-section');
-    if (dimensionType === 'totalArea') {
-        parentDiv.querySelector('.totalAreaInput').style.display = 'block';
-        parentDiv.querySelector('.lengthWidthInput').style.display = 'none';
-    } else {
-        parentDiv.querySelector('.totalAreaInput').style.display = 'none';
-        parentDiv.querySelector('.lengthWidthInput').style.display = 'block';
-    }
-}
-
-function removeArea(button) {
-    const areaDiv = button.closest('.area-section');
-    if (areaDiv) {
-        areaDiv.remove();
-        updateAreaTitles();
-    }
-}
-
-function updateAreaTitles() {
-    const areaSections = document.querySelectorAll('.area-section');
-    areaSections.forEach((area, index) => {
-        area.querySelector('h3').textContent = `Area ${index + 1}`;
-    });
-}
-
-function calculateTiles() {
-    const tileLength = parseFloat(document.getElementById('tileLength').value);
-    const tileWidth = parseFloat(document.getElementById('tileWidth').value);
-    const tilesPerBox = parseInt(document.getElementById('tilesPerBox').value);
-    
-    let totalAreaMeters = 0;
-
-    document.querySelectorAll('.area-section').forEach(area => {
-        let areaMeters = 0;
-        const dimensionType = area.querySelector('.dimensionType').value;
-        if (dimensionType === 'totalArea') {
-            areaMeters = parseFloat(area.querySelector('.totalArea').value);
-        } else {
-            const spaceLength = parseFloat(area.querySelector('.spaceLength').value);
-            const spaceWidth = parseFloat(area.querySelector('.spaceWidth').value);
-            areaMeters = spaceLength * spaceWidth;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script>
+        function addArea() {
+            const areasDiv = document.getElementById('areas');
+            const areaCount = areasDiv.children.length + 1;
+            const areaId = `area${areaCount}`;
+            const newAreaDiv = document.createElement('div');
+            newAreaDiv.className = 'area-section';
+            newAreaDiv.id = areaId;
+            newAreaDiv.innerHTML = `
+                <h3>Area ${areaCount}</h3>
+                <div>
+                    <label>Space Dimensions:</label>
+                    <select class="dimensionType" onchange="toggleDimensions(this)">
+                        <option value="totalArea">Total Square Meters</option>
+                        <option value="lengthWidth">Length and Width</option>
+                    </select>
+                </div>
+                <div class="totalAreaInput">
+                    <label>Total Area (square meters):</label>
+                    <input type="number" class="totalArea">
+                </div>
+                <div class="lengthWidthInput" style="display:none">
+                    <label>Space Length (meters):</label>
+                    <input type="number" class="spaceLength">
+                    <label>Space Width (meters):</label>
+                    <input type="number" class="spaceWidth">
+                </div>
+                <button type="button" class="removeAreaButton" onclick="removeArea(this)">Remove Area</button>
+            `;
+            areasDiv.appendChild(newAreaDiv);
         }
-        totalAreaMeters += areaMeters;
-    });
 
-    const tileAreaMM = tileLength * tileWidth;
-    const tileAreaMeters = tileAreaMM / 1000000;
-    let tilesNeeded = totalAreaMeters / tileAreaMeters;
-    tilesNeeded = Math.ceil(tilesNeeded);
-    const boxesNeeded = Math.ceil(tilesNeeded / tilesPerBox);
-    const exactCoverageMeters = tilesPerBox * boxesNeeded * tileAreaMeters;
+        function toggleDimensions(selectElement) {
+            const dimensionType = selectElement.value;
+            const parentDiv = selectElement.closest('.area-section');
+            if (dimensionType === 'totalArea') {
+                parentDiv.querySelector('.totalAreaInput').style.display = 'block';
+                parentDiv.querySelector('.lengthWidthInput').style.display = 'none';
+            } else {
+                parentDiv.querySelector('.totalAreaInput').style.display = 'none';
+                parentDiv.querySelector('.lengthWidthInput').style.display = 'block';
+            }
+        }
 
-    const resultContent = `
-        Total tiles needed: ${tilesNeeded}<br>
-        Total boxes needed: ${boxesNeeded}<br>
-        Exact area covered by required boxes: ${exactCoverageMeters.toFixed(2)} square meters
-    `;
+        function removeArea(button) {
+            const areaDiv = button.closest('.area-section');
+            if (areaDiv) {
+                areaDiv.remove();
+                updateAreaTitles();
+            }
+        }
 
-    document.getElementById('modalResultContent').innerHTML = resultContent;
+        function updateAreaTitles() {
+            const areaSections = document.querySelectorAll('.area-section');
+            areaSections.forEach((area, index) => {
+                area.querySelector('h3').textContent = `Area ${index + 1}`;
+            });
+        }
 
-    const modal = document.getElementById('resultModal');
-    modal.style.display = 'flex';
-}
+        function calculateTiles() {
+            const tileLength = parseFloat(document.getElementById('tileLength').value);
+            const tileWidth = parseFloat(document.getElementById('tileWidth').value);
+            const tilesPerBox = parseInt(document.getElementById('tilesPerBox').value);
+            
+            let totalAreaMeters = 0;
 
-function calculateTotalCoverage() {
-    const tileLength = parseFloat(document.getElementById('tileLengthCoverage').value);
-    const tileWidth = parseFloat(document.getElementById('tileWidthCoverage').value);
-    const tilesPerBox = parseInt(document.getElementById('tilesPerBoxCoverage').value);
-    const totalBoxes = parseInt(document.getElementById('totalBoxes').value);
+            document.querySelectorAll('.area-section').forEach(area => {
+                let areaMeters = 0;
+                const dimensionType = area.querySelector('.dimensionType').value;
+                if (dimensionType === 'totalArea') {
+                    areaMeters = parseFloat(area.querySelector('.totalArea').value);
+                } else {
+                    const spaceLength = parseFloat(area.querySelector('.spaceLength').value);
+                    const spaceWidth = parseFloat(area.querySelector('.spaceWidth').value);
+                    areaMeters = spaceLength * spaceWidth;
+                }
+                totalAreaMeters += areaMeters;
+            });
 
-    const tileAreaMM = tileLength * tileWidth;
-    const tileAreaMeters = tileAreaMM / 1000000;
-    const totalTiles = tilesPerBox * totalBoxes;
-    const totalCoverageMeters = totalTiles * tileAreaMeters;
+            const tileAreaMM = tileLength * tileWidth;
+            const tileAreaMeters = tileAreaMM / 1000000;
+            let tilesNeeded = totalAreaMeters / tileAreaMeters;
+            tilesNeeded = Math.ceil(tilesNeeded);
+            const boxesNeeded = Math.ceil(tilesNeeded / tilesPerBox);
+            const exactCoverageMeters = tilesPerBox * boxesNeeded * tileAreaMeters;
 
-    const resultContent = `Total area covered by ${totalBoxes} boxes: ${totalCoverageMeters.toFixed(2)} square meters`;
+            const resultContent = `
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; vertical-align: middle;">Description</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: right; background-color: #f2f2f2; vertical-align: middle;">Value</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle;">Total tiles needed</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; vertical-align: middle;">${tilesNeeded}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle;">Total boxes needed</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; vertical-align: middle;">${boxesNeeded}</td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle;">Exact area covered by required boxes</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; vertical-align: middle;">${exactCoverageMeters.toFixed(2)} square meters</td>
+                    </tr>
+                </table>
+            `;
 
-    document.getElementById('modalResultContent').innerHTML = resultContent;
+            document.getElementById('modalResultContent').innerHTML = resultContent;
+            const modal = document.getElementById('resultModal');
+            modal.style.display = 'flex';
 
-    const modal = document.getElementById('resultModal');
-    modal.style.display = 'flex';
-}
+            // Add event listener for PDF download button
+            document.getElementById('downloadPdfButton').addEventListener('click', downloadPDF);
+        }
 
-function showCalculator(type) {
-    document.getElementById('choiceModal').style.display = 'none';
-    if (type === 'tiles') {
-        document.getElementById('tilesCalculatorSection').style.display = 'block';
-    } else if (type === 'coverage') {
-        document.getElementById('coverageCalculatorSection').style.display = 'block';
-    }
-}
+        function calculateTotalCoverage() {
+            const tileLength = parseFloat(document.getElementById('tileLengthCoverage').value);
+            const tileWidth = parseFloat(document.getElementById('tileWidthCoverage').value);
+            const tilesPerBox = parseInt(document.getElementById('tilesPerBoxCoverage').value);
+            const totalBoxes = parseInt(document.getElementById('totalBoxes').value);
 
-function goBackToSelection() {
-    document.getElementById('tilesCalculatorSection').style.display = 'none';
-    document.getElementById('coverageCalculatorSection').style.display = 'none';
-    document.getElementById('choiceModal').style.display = 'flex';
-}
+            const tileAreaMM = tileLength * tileWidth;
+            const tileAreaMeters = tileAreaMM / 1000000;
+            const totalTiles = tilesPerBox * totalBoxes;
+            const totalCoverageMeters = totalTiles * tileAreaMeters;
 
-document.querySelector('.close').onclick = function() {
-    const modal = document.getElementById('resultModal');
-    modal.style.display = 'none';
-}
+            const resultContent = `
+                <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                    <tr>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: left; background-color: #f2f2f2; vertical-align: middle;">Description</th>
+                        <th style="border: 1px solid #ddd; padding: 8px; text-align: right; background-color: #f2f2f2; vertical-align: middle;">Value</th>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: middle;">Total area covered by ${totalBoxes} boxes</td>
+                        <td style="border: 1px solid #ddd; padding: 8px; text-align: right; vertical-align: middle;">${totalCoverageMeters.toFixed(2)} square meters</td>
+                    </tr>
+                </table>
+            `;
 
-window.onclick = function(event) {
-    const modal = document.getElementById('resultModal');
-    if (event.target == modal) {
-        modal.style.display = 'none';
-    }
-}
-</script>
+            document.getElementById('modalResultContent').innerHTML = resultContent;
+
+            const modal = document.getElementById('resultModal');
+            modal.style.display = 'flex';
+
+            // Add event listener for PDF download button
+            document.getElementById('downloadPdfButton').addEventListener('click', downloadPDF);
+        }
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            html2canvas(document.querySelector("#modalResultContent"), { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL("image/png");
+                const imgWidth = 190;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+
+                doc.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
+                doc.save("Tile-Calculator-Result.pdf");
+            });
+        }
+
+        function showCalculator(type) {
+            document.getElementById('choiceModal').style.display = 'none';
+            if (type === 'tiles') {
+                document.getElementById('tilesCalculatorSection').style.display = 'block';
+            } else if (type === 'coverage') {
+                document.getElementById('coverageCalculatorSection').style.display = 'block';
+            }
+        }
+
+        function goBackToSelection() {
+            document.getElementById('tilesCalculatorSection').style.display = 'none';
+            document.getElementById('coverageCalculatorSection').style.display = 'none';
+            document.getElementById('choiceModal').style.display = 'flex';
+        }
+
+        document.querySelector('.close').onclick = function() {
+            const modal = document.getElementById('resultModal');
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('resultModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
